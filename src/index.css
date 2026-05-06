@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 14% 7%;
+    --foreground: 38 30% 92%;
+
+    --card: 30 14% 9%;
+    --card-foreground: 38 30% 92%;
+
+    --popover: 30 14% 9%;
+    --popover-foreground: 38 30% 92%;
+
+    --primary: 38 45% 85%;
+    --primary-foreground: 30 14% 7%;
+
+    --secondary: 30 10% 14%;
+    --secondary-foreground: 38 30% 92%;
+
+    --muted: 30 10% 14%;
+    --muted-foreground: 38 12% 60%;
+
+    --accent: 38 40% 78%;
+    --accent-foreground: 30 14% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 38 30% 92%;
+
+    --border: 30 10% 18%;
+    --input: 30 10% 14%;
+    --ring: 38 45% 85%;
+
+    --radius: 0.25rem;
+
+    --cream: 38 45% 85%;
+    --warm-dark: 30 14% 7%;
+    --soft-line: 38 20% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-serif {
+    font-family: 'Fraunces', serif;
+  }
+  .font-mono-label {
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  .text-cream {
+    color: hsl(var(--cream));
+  }
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+  .border-soft {
+    border-color: hsl(var(--soft-line) / 0.25);
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-blur {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), filter 1.2s ease-out;
+}
+.reveal-blur.in-view {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Kinetic letter wrap (used by SplitText) */
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60%);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.letter.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated underline link */
+.story-link {
+  @apply relative inline-block;
+}
+.story-link::after {
+  content: "";
+  @apply absolute left-0 -bottom-0.5 h-px w-full origin-bottom-right scale-x-0 bg-current transition-transform duration-500;
+}
+.story-link:hover::after {
+  @apply origin-bottom-left scale-x-100;
+}
+
+/* Glow noise overlay */
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+}
+
+/* Smooth selection */
+::selection {
+  background: hsl(var(--cream) / 0.85);
+  color: hsl(var(--warm-dark));
+}
